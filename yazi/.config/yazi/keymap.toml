@@ -1,0 +1,9 @@
+[[mgr.prepend_keymap]]
+on = "E"
+run = "open"
+desc = "Open with default app"
+
+[[mgr.prepend_keymap]]
+on = "T"
+run = "tab_create"
+desc = "New Tab"
