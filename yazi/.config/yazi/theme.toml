@@ -1,0 +1,9 @@
+[mgr]
+cwd = { fg = "green", bold = true }
+hovered = { fg = "black", bg = "yellow" }
+
+[selection]
+fg = "black"
+bg = "cyan"
+bold = true
+
