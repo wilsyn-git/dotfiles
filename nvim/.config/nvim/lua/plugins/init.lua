@@ -33,12 +33,13 @@ require("lazy").setup({
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
-        ensure_installed = { "vimdoc", "jsonc", "regex", "fish", 
-                    "lua", "vim", "bash", "json", "python",
-                    "go", "markdown", "markdown_inline", "toml",
-                    "gitcommit", "gitignore", "javascript", "typescript",
-                    "html", "css", "scss", "c", "cpp", "rust",
-                    "java", "odin"},
+        ensure_installed = {   
+                    "lua", "vim", "vimdoc",
+                    "bash", "json", "toml",
+                    "python", "markdown", "markdown_inline", 
+                    "gitcommit", "gitignore", 
+        },
+        auto_install = false,
         highlight = { enable = true },
         indent = { enable = true },
       })
