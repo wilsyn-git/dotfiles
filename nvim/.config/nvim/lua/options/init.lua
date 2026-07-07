@@ -13,7 +13,7 @@ g.maplocalleader = " "
 
 keymap.set("n","<leader>w", ":w<CR>")
 keymap.set("n","<leader>q", ":q<CR>")
-keymap.set("n","<leader>e", ":Ex<CR>")
+-- <leader>e opens Oil (defined in lua/plugins/oil.lua), replacing :Ex/netrw.
 keymap.set("n","<leader>tw", ":set wrap!<CR>")
 
 keymap.set("n","<leader>ff", "<cmd>Telescope find_files<cr>")
