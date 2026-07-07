@@ -16,11 +16,11 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-alias alg='ssh -i REDACTED ec2-user@REDACTED'
-alias lcs='ssh -l REDACTED REDACTED'
-alias webguy='ssh -i REDACTED opc@REDACTED'
-alias ocics='ssh -i REDACTED opc@REDACTED'
 alias ws='cd ~/OneDrive/workspace/'
+
+# Machine-specific / private config (SSH aliases, secrets, etc.).
+# Kept out of version control — see ~/.zshrc.local (not committed to this repo).
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
 alias ls='eza --group-directories-first'
 alias ll='eza -lha --git'
