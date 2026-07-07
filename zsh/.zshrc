@@ -43,7 +43,7 @@ sc() {
 }
 
 brewu() {
-    brew update && brew upgrade --greedy-auto-updates
+    brew update && brew upgrade --greedy-auto-updates -y
 }
 
 unnote() {
