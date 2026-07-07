@@ -16,6 +16,31 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
+# --- completions (added to fpath before compinit) ---
+zinit light zsh-users/zsh-completions
+
+# initialize completion system (must run before fzf-tab and completion-dependent plugins)
+autoload -Uz compinit && compinit
+zinit cdreplay -q
+
+# --- fzf keybindings + completion (Ctrl-R history, Ctrl-T files, Alt-C cd) ---
+# Sourced BEFORE fzf-tab so fzf-tab keeps ownership of the Tab key.
+source <(fzf --zsh)
+
+# --- fzf-tab: fuzzy Tab-completion menu ---
+# Load after compinit + fzf, and before widget-wrapping plugins.
+zinit light Aloxaf/fzf-tab
+
+# widget-wrapping plugins last; syntax-highlighting must be the very last plugin.
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
+
+# --- zsh history configuration ---
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS INC_APPEND_HISTORY EXTENDED_HISTORY
+
 alias ws='cd ~/OneDrive/workspace/'
 
 # Machine-specific / private config (SSH aliases, secrets, etc.).
@@ -107,7 +132,6 @@ fi
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-export PATH=$PATH:$HOME/.local/opt/go/bin
 export PATH=$PATH:$HOME/.local/opt/go/bin
 export PATH=$PATH:$HOME/go/bin
 export XDG_CONFIG_HOME="$HOME/.config"
