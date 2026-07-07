@@ -1,0 +1,15 @@
+[user]
+	name = wilsyn-git
+	email = orders@siraim.com
+[init]
+	defaultBranch = main
+
+[alias]
+	ac = !git add . && git commit -m
+	acp = !git add . && git commit -m \"$1\" && git push
+[credential "https://github.com"]
+	helper = 
+	helper = !/Users/sam/.local/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/Users/sam/.local/bin/gh auth git-credential

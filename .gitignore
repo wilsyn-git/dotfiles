@@ -1,0 +1,10 @@
+# macOS Finder metadata
+.DS_Store
+
+# Editor / tool backup files
+*.bak
+*.backup
+*.bundle
+
+# Local skill/session state, not part of the tracked dotfiles
+.superpowers/
