@@ -14,6 +14,7 @@ g.maplocalleader = " "
 keymap.set("n","<leader>w", ":w<CR>")
 keymap.set("n","<leader>q", ":q<CR>")
 keymap.set("n","<leader>e", ":Ex<CR>")
+keymap.set("n","<leader>tw", ":set wrap!<CR>")
 
 keymap.set("n","<leader>ff", "<cmd>Telescope find_files<cr>")
 keymap.set("n","<leader>fg", "<cmd>Telescope live_grep<cr>")
