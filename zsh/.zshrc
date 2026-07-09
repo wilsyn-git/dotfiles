@@ -40,6 +40,8 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=50000
 setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS INC_APPEND_HISTORY EXTENDED_HISTORY
+# zsh's `history` only shows the last 16 events by default; show the full log like bash.
+alias history='history 1'
 
 alias ws='cd ~/OneDrive/workspace/'
 
