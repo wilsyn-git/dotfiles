@@ -1,1 +1,16 @@
+# Global git ignores — git's XDG default path, active without core.excludesFile.
+# Stowed from ~/dotfiles, so these rules travel with the dotfiles repo.
+# Note: ignoring a path does NOT untrack it. Files already committed in a repo
+# stay tracked until `git rm --cached` runs there.
+
+# Claude Code local settings
 **/.claude/settings.local.json
+
+# Agent session handoffs — working notes, not project docs. The pattern has no
+# slash, so it matches at any depth (./nextPrompt*.md and docs/nextPrompt*.md
+# alike). pickup/catchup read these off disk, never from git.
+nextPrompt*.md
+
+# Superpowers working state (brainstorm transcripts, server-info, etc).
+# Design specs and plans under docs/superpowers/ are a different thing — tracked.
+.superpowers/
