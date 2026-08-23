@@ -7,9 +7,14 @@ return {
   config = function()
     local langs = {
       "lua", "luadoc", "vim", "vimdoc", "query", "regex",
-      "bash", "fish", "tmux",
+      -- (nvim-treesitter's `main` branch dropped the tmux grammar; leaving it
+      -- in the list only produced an "unsupported language" warning on startup.)
+      "bash", "fish",
       "json", "toml", "yaml", "csv",
       "python", "go", "rust", "c", "cpp", "odin", "swift", "java",
+      -- R: `r` also powers the code-chunk injections inside .Rmd/.qmd, and
+      -- `rnoweb`/`latex` cover Sweave (.Rnw) documents.
+      "r", "rnoweb", "latex",
       "javascript", "typescript", "html", "css", "scss",
       "markdown", "markdown_inline",
       "diff", "git_config", "gitcommit", "gitignore", "requirements",
@@ -17,6 +22,13 @@ return {
 
     -- Install/update the parsers (async; runs in the background).
     require("nvim-treesitter").install(langs)
+
+    -- There is no `rmd` or `quarto` grammar; both are Markdown with typed code
+    -- fences. Point those filetypes at the markdown parser so they get real
+    -- highlighting (and R chunk injections) instead of falling through to the
+    -- bundled regex syntax. (R.nvim does this too, but keeping it here means
+    -- .Rmd/.qmd still highlight correctly if that plugin is ever removed.)
+    vim.treesitter.language.register("markdown", { "rmd", "quarto" })
 
     -- The 'main' branch no longer wires up highlight/indent for you;
     -- enable them per-buffer whenever a parser is available.

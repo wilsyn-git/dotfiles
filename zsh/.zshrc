@@ -44,6 +44,7 @@ setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS I
 alias history='history 1'
 
 alias ws='cd ~/OneDrive/workspace/'
+alias gd='cd "$HOME/Google Drive/My Drive"'
 
 # Machine-specific / private config (SSH aliases, secrets, etc.).
 # Kept out of version control — see ~/.zshrc.local (not committed to this repo).
@@ -75,6 +76,25 @@ brewu() {
 
 unnote() {
     killall NotificationCenter
+}
+
+# Save a CloudKit user token to the keychain, replacing any existing one.
+# Usage: cktoken <token>   — or run with no arguments to use the clipboard.
+cktoken() {
+  local token="$*"
+  [[ -z "$token" ]] && token="$(pbpaste)"
+
+  # Copied tokens often carry a trailing newline or stray spaces.
+  token="${token//[[:space:]]/}"
+
+  if [[ -z "$token" ]]; then
+    echo "Usage: cktoken <token>"
+    echo "       cktoken            # reads the token from the clipboard"
+    return 1
+  fi
+
+  xcrun cktool save-token --type user --force "$token" || return 1
+  echo "Saved CloudKit user token (${#token} chars) to the keychain"
 }
 
 
@@ -237,4 +257,4 @@ if [ -f '/Users/sam/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/U
 
 
 # Added by Antigravity CLI installer
-export PATH="/Users/sam/.local/bin:$PATH"
+# PATH entry removed: /Users/sam/.local/bin is already exported by ~/.zprofile.

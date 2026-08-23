@@ -5,3 +5,6 @@ font-thicken = true
 background-opacity = 0.8
 background-blur = true
 
+# Shell integration: sudo preserves TERMINFO; ssh-terminfo installs
+# xterm-ghostty on remote hosts; ssh-env falls back to xterm-256color.
+shell-integration-features = sudo,ssh-terminfo,ssh-env

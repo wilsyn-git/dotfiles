@@ -24,6 +24,16 @@ brew "neovim"        # editor; 0.11+ required (treesitter uses `main`-branch API
 brew "fd"            # fast file finder, used by Telescope
 brew "ripgrep"       # fast grep, used by Telescope live_grep
 
+# --- R (nvim/lua/plugins/r.lua, lsp.lua, treesitter.lua) ---
+brew "r"             # R itself; R.nvim runs the console and nvim-lspconfig launches
+                      # `R -e languageserver::run()` straight off $PATH
+brew "pandoc"        # document conversion; knitr/rmarkdown shell out to it
+cask "quarto"        # .qmd rendering + :QuartoPreview (pkg installer, needs sudo)
+# The R side is not brew-managed. After installing R, run once:
+#   Rscript -e 'install.packages(c("languageserver","lintr","styler","httpgd","knitr","rmarkdown"))'
+# languageserver is the LSP, lintr backs its diagnostics, httpgd renders plots to
+# a browser. `air` (the formatter) is installed by mason, not brew.
+
 # --- tmux (tmux/) ---
 brew "tmux"
 

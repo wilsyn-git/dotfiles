@@ -32,8 +32,30 @@ return {
       },
     })
 
+    -- R: `languageserver` is a CRAN package, not a standalone binary, so it is
+    -- installed into the user R library (install.packages("languageserver"))
+    -- rather than through mason -- lspconfig launches it as `R -e
+    -- languageserver::run()` straight off $PATH. It covers completion, hover,
+    -- go-to-definition and lintr diagnostics for r/rmd/quarto buffers.
+    --
+    -- Formatting is deliberately handed to `air` (below): both servers advertise
+    -- documentFormattingProvider, and two formatting-capable clients on one
+    -- buffer makes vim.lsp.buf.format() stop and ask which to use every time.
+    vim.lsp.config("r_language_server", {
+      on_init = function(client)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+      end,
+    })
+    vim.lsp.enable("r_language_server")
+
     require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls" },
+      -- air: Posit's R formatter/language server (a Rust binary, so mason can
+      -- own it). Registers for `r` filetypes only and is the sole formatter
+      -- there; automatic_enable picks it up once installed.
+      -- yamlls: completion/validation for the YAML front matter at the top of
+      -- .qmd and .Rmd documents (R.nvim's :checkhealth asks for it by name).
+      ensure_installed = { "lua_ls", "air", "yamlls" },
       -- automatic_enable (default true) enables every installed server that
       -- nvim-lspconfig ships an lsp/ config for. Exclude stylua: it is a
       -- formatter, not a language server, so enabling it as one just makes it
@@ -55,6 +77,9 @@ return {
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts("Hover"))
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename"))
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
+        vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+          vim.lsp.buf.format({ async = true })
+        end, opts("Format"))
         vim.keymap.set("n", "[d", function()
           vim.diagnostic.jump({ count = -1, float = true })
         end, opts("Previous diagnostic"))

@@ -9,7 +9,11 @@ local data = fn.stdpath("data")
 
 
 g.mapleader = " "
-g.maplocalleader = " "
+-- LocalLeader is deliberately NOT <Space>: R.nvim hangs its entire keymap set
+-- off <LocalLeader> (\d send line, \ss send selection, \cc send chunk, ...),
+-- which would shadow the <Space>-prefixed mappings below inside R buffers.
+-- Backslash also matches every Nvim-R/R.nvim tutorial and cheatsheet.
+g.maplocalleader = "\\"
 
 keymap.set("n","<leader>w", ":w<CR>")
 keymap.set("n","<leader>q", ":q<CR>")
