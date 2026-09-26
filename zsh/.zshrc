@@ -257,4 +257,4 @@ if [ -f '/Users/sam/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/U
 
 
 # Added by Antigravity CLI installer
-# PATH entry removed: /Users/sam/.local/bin is already exported by ~/.zprofile.
+export PATH="$HOME/.local/bin:$PATH"
