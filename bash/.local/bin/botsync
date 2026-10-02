@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # Pull the latest basicbot main into both prod checkouts (~/void and ~/oubliette).
 # Prod is pull-only: develop locally, test on the dev bot (basicbot's scripts/botdev),
-# merge a PR, then run this here.
+# merge a PR, then run this here. Reinstalls deps into a checkout's .venv (via uv) when
+# the pull changed requirements.txt.
 # Usage: botsync
 set -euo pipefail
+
+UV="$HOME/.local/bin/uv"
 
 if [ $# -gt 0 ]; then
   echo "botsync no longer commits — prod is pull-only. Commit + PR from your dev checkout, then run plain: botsync" >&2
@@ -18,7 +21,12 @@ for dir in "$HOME/void/basicbot" "$HOME/oubliette/basicbot"; do
     git status --short --untracked-files=no >&2
     exit 1
   fi
+  before=$(git rev-parse HEAD)
   git pull --ff-only
+  if ! git diff --quiet "$before" HEAD -- requirements.txt; then
+    echo "==> requirements.txt changed; installing into $dir/.venv"
+    "$UV" pip install -q --python .venv/bin/python -r requirements.txt
+  fi
 done
 
 echo
