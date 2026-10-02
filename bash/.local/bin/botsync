@@ -1,30 +1,25 @@
 #!/usr/bin/env bash
-# Commit + push basicbot from ~/void, then pull it into ~/oubliette.
-# Usage: botsync "commit message"
+# Pull the latest basicbot main into both prod checkouts (~/void and ~/oubliette).
+# Prod is pull-only: develop locally, test on the dev bot (basicbot's scripts/botdev),
+# merge a PR, then run this here.
+# Usage: botsync
 set -euo pipefail
 
-SRC="$HOME/void/basicbot"
-DST="$HOME/oubliette/basicbot"
-
-if [ $# -eq 0 ] || [ -z "$*" ]; then
-  echo "Usage: botsync \"commit message\"" >&2
+if [ $# -gt 0 ]; then
+  echo "botsync no longer commits — prod is pull-only. Commit + PR from your dev checkout, then run plain: botsync" >&2
   exit 1
 fi
-MSG="$*"
 
-echo "==> $SRC"
-cd "$SRC"
-git add -A
-if git diff --cached --quiet; then
-  echo "Nothing to commit; pushing any existing commits."
-else
-  git commit -m "$MSG"
-fi
-git push
-
-echo "==> $DST"
-cd "$DST"
-git pull
+for dir in "$HOME/void/basicbot" "$HOME/oubliette/basicbot"; do
+  echo "==> $dir"
+  cd "$dir"
+  if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+    echo "❌ local edits to tracked files — prod is pull-only. Move them to a branch/PR first:" >&2
+    git status --short --untracked-files=no >&2
+    exit 1
+  fi
+  git pull --ff-only
+done
 
 echo
-echo "✅ Done — basicbot pushed from void and pulled into oubliette. Restart them: bot restart all"
+echo "✅ Done — both bots at $(git log --oneline -1). Restart them: bot restart all"
