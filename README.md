@@ -8,6 +8,7 @@ The repo is laid out as [GNU Stow](https://www.gnu.org/software/stow/) packages:
 
 | Package | Symlinks to | What it configures |
 | --- | --- | --- |
+| `bash/` | `~/.bash_aliases`, `~/.local/bin/botsync` | Bash on the Ubuntu servers (goobot): `syu`, the pm2-backed `bot` command, `botsync`. Ubuntu's stock `~/.bashrc` sources `~/.bash_aliases`. |
 | `btop/` | `~/.config/btop/` | [btop](https://github.com/aristocratos/btop) resource monitor |
 | `ccstatusline/` | `~/.config/ccstatusline/` | [ccstatusline](https://github.com/sirmalloc/ccstatusline) status line for Claude Code |
 | `ghostty/` | `~/.config/ghostty/` | [Ghostty](https://ghostty.org/) terminal emulator |

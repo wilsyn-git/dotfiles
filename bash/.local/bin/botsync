@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Commit + push basicbot from ~/void, then pull it into ~/oubliette.
+# Usage: botsync "commit message"
+set -euo pipefail
+
+SRC="$HOME/void/basicbot"
+DST="$HOME/oubliette/basicbot"
+
+if [ $# -eq 0 ] || [ -z "$*" ]; then
+  echo "Usage: botsync \"commit message\"" >&2
+  exit 1
+fi
+MSG="$*"
+
+echo "==> $SRC"
+cd "$SRC"
+git add -A
+if git diff --cached --quiet; then
+  echo "Nothing to commit; pushing any existing commits."
+else
+  git commit -m "$MSG"
+fi
+git push
+
+echo "==> $DST"
+cd "$DST"
+git pull
+
+echo
+echo "✅ Done — basicbot pushed from void and pulled into oubliette. Restart them: bot restart all"
