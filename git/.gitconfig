@@ -9,7 +9,11 @@
 	acp = !git add . && git commit -m \"$1\" && git push
 [credential "https://github.com"]
 	helper = 
-	helper = !/Users/sam/.local/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/Users/sam/.local/bin/gh auth git-credential
+	helper = !gh auth git-credential
+
+# Machine-specific overrides (not in this repo). Must stay last so it wins.
+[include]
+	path = ~/.gitconfig.local

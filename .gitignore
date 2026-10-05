@@ -8,3 +8,6 @@
 
 # Local skill/session state, not part of the tracked dotfiles
 .superpowers/
+
+# Machine-specific config files (e.g. ghostty/.config/ghostty/config.local)
+*.local

@@ -1,3 +1,4 @@
+export PATH="$HOME/.npm-global/bin:$PATH"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -73,6 +74,13 @@ sc() {
 brewu() {
     brew update && brew upgrade --greedy-auto-updates -y
 }
+
+# Debian/Ubuntu only — skipped on macOS.
+if command -v apt-get >/dev/null 2>&1; then
+    syu() {
+        sudo apt update && sudo apt upgrade -y
+    }
+fi
 
 unnote() {
     killall NotificationCenter
