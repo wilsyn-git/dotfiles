@@ -10,7 +10,6 @@ The repo is laid out as [GNU Stow](https://www.gnu.org/software/stow/) packages:
 | --- | --- | --- |
 | `bash/` | `~/.bash_aliases`, `~/.local/bin/botsync` | Bash on the Ubuntu servers (goobot): `syu`, the pm2-backed `bot` command, `botsync`. Ubuntu's stock `~/.bashrc` sources `~/.bash_aliases`. |
 | `btop/` | `~/.config/btop/` | [btop](https://github.com/aristocratos/btop) resource monitor |
-| `ccstatusline/` | `~/.config/ccstatusline/` | [ccstatusline](https://github.com/sirmalloc/ccstatusline) status line for Claude Code |
 | `ghostty/` | `~/.config/ghostty/` | [Ghostty](https://ghostty.org/) terminal emulator |
 | `git/` | `~/.gitconfig`, `~/.config/git/ignore` | Git config + global ignore |
 | `nvim/` | `~/.config/nvim/` | Neovim (Lua, [lazy.nvim](https://github.com/folke/lazy.nvim)) |
@@ -30,7 +29,7 @@ cd ~/dotfiles
 ./install.sh
 ```
 
-`install.sh` runs `brew bundle --file=Brewfile` to install every tool these configs expect, then stows all ten packages. Restart your shell afterward (`exec zsh`).
+`install.sh` runs `brew bundle --file=Brewfile` to install every tool these configs expect, then stows all nine packages. Restart your shell afterward (`exec zsh`).
 
 ### Manual install
 
@@ -45,7 +44,7 @@ git clone https://github.com/wilsyn-git/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
 # 3. Symlink the packages you want
-stow btop ccstatusline ghostty git nvim p10k statusLine tmux yazi zsh
+stow btop ghostty git nvim p10k statusLine tmux yazi zsh
 
 # ...or just one
 stow nvim
@@ -136,6 +135,6 @@ Tokyo Night theme, Droid Sans Mono Nerd Font at size 16, thickened font renderin
 
 Resource monitor configuration — themes, update rate, and displayed panes.
 
-### ccstatusline (`ccstatusline/.config/ccstatusline/settings.json`)
+### statusLine (`statusLine/.claude/statusLine.js`)
 
-Status line layout for Claude Code, showing model, context usage, session cost, and git branch/worktree info.
+Two-line Claude Code status line in the Tokyo Night palette, built from the JSON Claude Code pipes on stdin. Line 1: model · effort, a context bar colored against the handoff target (`HANDOFF_PCT`, default 60), this turn's context growth, tokens and estimated turns left before handoff, and the in/out/cached token mix. Line 2: prompt-cache time left and hit ratio (or the re-bill cost once cold), 5-hour and weekly plan usage, session cost and burn rate, and git branch/dirty/ahead-behind plus lines changed. Per-turn deltas are kept in `$TMPDIR/claudeStatusLine/`.
