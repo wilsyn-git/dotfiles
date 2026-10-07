@@ -11,7 +11,7 @@ else
 fi
 
 # 2. Symlink dotfiles with GNU Stow (explicit package list)
-PACKAGES=(btop ccstatusline ghostty git nvim p10k tmux yazi zsh)
+PACKAGES=(btop ghostty git nvim p10k statusLine tmux yazi zsh)
 stow -v "${PACKAGES[@]}"
 
 echo "Done. Restart your shell (or 'exec zsh'). In tmux, press prefix+I to install plugins; Neovim installs plugins on first launch."
