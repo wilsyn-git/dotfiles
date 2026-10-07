@@ -15,6 +15,7 @@ The repo is laid out as [GNU Stow](https://www.gnu.org/software/stow/) packages:
 | `git/` | `~/.gitconfig`, `~/.config/git/ignore` | Git config + global ignore |
 | `nvim/` | `~/.config/nvim/` | Neovim (Lua, [lazy.nvim](https://github.com/folke/lazy.nvim)) |
 | `p10k/` | `~/.p10k.zsh` | [Powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt (generated config) |
+| `statusLine/` | `~/.claude/statusLine.js` | Custom Claude Code status line (Node, no deps): model/effort, context vs. handoff target (`HANDOFF_PCT`, default 60), token mix, prompt cache, plan limits, cost, git. Point `statusLine.command` in `~/.claude/settings.json` at `node ~/.claude/statusLine.js` |
 | `tmux/` | `~/.config/tmux/tmux.conf` | tmux terminal multiplexer |
 | `yazi/` | `~/.config/yazi/` | [Yazi](https://github.com/sxyazi/yazi) terminal file manager |
 | `zsh/` | `~/.zshrc` | Zsh shell — plugin manager, aliases, and helper functions |
@@ -29,7 +30,7 @@ cd ~/dotfiles
 ./install.sh
 ```
 
-`install.sh` runs `brew bundle --file=Brewfile` to install every tool these configs expect, then stows all nine packages. Restart your shell afterward (`exec zsh`).
+`install.sh` runs `brew bundle --file=Brewfile` to install every tool these configs expect, then stows all ten packages. Restart your shell afterward (`exec zsh`).
 
 ### Manual install
 
@@ -44,7 +45,7 @@ git clone https://github.com/wilsyn-git/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
 # 3. Symlink the packages you want
-stow btop ccstatusline ghostty git nvim p10k tmux yazi zsh
+stow btop ccstatusline ghostty git nvim p10k statusLine tmux yazi zsh
 
 # ...or just one
 stow nvim
