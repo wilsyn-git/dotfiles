@@ -14,7 +14,6 @@ The repo is laid out as [GNU Stow](https://www.gnu.org/software/stow/) packages:
 | `git/` | `~/.gitconfig`, `~/.config/git/ignore` | Git config + global ignore |
 | `nvim/` | `~/.config/nvim/` | Neovim (Lua, [lazy.nvim](https://github.com/folke/lazy.nvim)) |
 | `p10k/` | `~/.p10k.zsh` | [Powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt (generated config) |
-| `statusLine/` | `~/.claude/statusLine.js` | Custom Claude Code status line (Node, no deps): model/effort, context vs. handoff target (`HANDOFF_PCT`, default 60), token mix, prompt cache, plan limits, cost, git. Point `statusLine.command` in `~/.claude/settings.json` at `node ~/.claude/statusLine.js` |
 | `tmux/` | `~/.config/tmux/tmux.conf` | tmux terminal multiplexer |
 | `yazi/` | `~/.config/yazi/` | [Yazi](https://github.com/sxyazi/yazi) terminal file manager |
 | `zsh/` | `~/.zshrc` | Zsh shell — plugin manager, aliases, and helper functions |
@@ -29,7 +28,7 @@ cd ~/dotfiles
 ./install.sh
 ```
 
-`install.sh` runs `brew bundle --file=Brewfile` to install every tool these configs expect, then stows all nine packages. Restart your shell afterward (`exec zsh`).
+`install.sh` runs `brew bundle --file=Brewfile` to install every tool these configs expect, then stows all eight packages. Restart your shell afterward (`exec zsh`).
 
 ### Manual install
 
@@ -44,7 +43,7 @@ git clone https://github.com/wilsyn-git/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
 # 3. Symlink the packages you want
-stow btop ghostty git nvim p10k statusLine tmux yazi zsh
+stow btop ghostty git nvim p10k tmux yazi zsh
 
 # ...or just one
 stow nvim
@@ -135,6 +134,6 @@ Tokyo Night theme, Droid Sans Mono Nerd Font at size 16, thickened font renderin
 
 Resource monitor configuration — themes, update rate, and displayed panes.
 
-### statusLine (`statusLine/.claude/statusLine.js`)
+### Claude Code status line
 
-Two-line Claude Code status line in the Tokyo Night palette, built from the JSON Claude Code pipes on stdin. Line 1: model · effort, a context bar colored against the handoff target (`HANDOFF_PCT`, default 60), this turn's context growth, tokens and estimated turns left before handoff, and the in/out/cached token mix. Line 2: prompt-cache time left and hit ratio (or the re-bill cost once cold), 5-hour and weekly plan usage, session cost and burn rate, and git branch/dirty/ahead-behind plus lines changed. Per-turn deltas are kept in `$TMPDIR/claudeStatusLine/`.
+Moved to its own repo: [claudeStatusLine](https://github.com/wilsyn-git/claudeStatusLine). Clone it and run its `install.sh` to symlink `~/.claude/statusLine.js`.
