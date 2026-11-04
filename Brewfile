@@ -48,6 +48,10 @@ brew "htop"          # lighter alternative monitor (no dotfiles package: ~/.conf
 # --- git helpers ---
 brew "git-filter-repo"  # history rewriting, not part of everyday git but handy to have
 
+# --- Kubernetes (no dotfiles package: ~/.kube/config holds cluster credentials) ---
+brew "kubernetes-cli"   # kubectl, for the k3s cluster on botman
+brew "k9s"              # terminal UI for browsing and managing clusters
+
 # --- Terminal (ghostty/) ---
 cask "ghostty"
 # Nerd Font used by ghostty/.config/ghostty/config (font-family = "Droid Sans Mono
