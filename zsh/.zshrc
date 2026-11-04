@@ -113,7 +113,7 @@ newblog() {
     echo "Example: newblog my-trip-to-tokyo"
     return 1
   fi
-  local root="$HOME/code/tentenbits"
+  local root="$HOME/code/web/tentenbits"
   local target="$root/src/content/blog/$1"
   if [[ -d "$target" ]]; then
     echo "Error: $target already exists"
@@ -131,7 +131,7 @@ newgallery() {
     echo "Example: newgallery disney-springs-march-2026"
     return 1
   fi
-  local root="$HOME/code/tentenbits"
+  local root="$HOME/code/web/tentenbits"
   local target="$root/src/content/gallery/$1"
   if [[ -d "$target" ]]; then
     echo "Error: $target already exists"
@@ -149,7 +149,7 @@ contentfarm() {
     echo "Example: contentfarm fixed my hawaii blog"
     return 1
   fi
-  local root="$HOME/code/tentenbits"
+  local root="$HOME/code/web/tentenbits"
   cd "$root" || { echo "Error: can't cd to $root"; return 1; }
   git add -A
   git commit -m "$*" || { echo "Nothing to commit"; return 0; }
@@ -266,3 +266,23 @@ if [ -f '/Users/sam/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/U
 
 # Added by Antigravity CLI installer
 export PATH="$HOME/.local/bin:$PATH"
+
+# Jump to a project under ~/code by name or part of one, from anywhere.
+# Exact name or a single match jumps; several matches (or no argument) open an fzf picker.
+cdp() {
+  local root="$HOME/code" query="${1:l}" d pick
+  local -a dirs matches
+  dirs=("$root"/(apple|web|games|bots|tools)/*(/N))
+  for d in "${dirs[@]}"; do
+    [[ -n "$query" && "${d:t:l}" == "$query" ]] && { cd "$d"; return; }
+    [[ "${d:t:l}" == *"$query"* ]] && matches+=("$d")
+  done
+  case ${#matches} in
+    0) echo "cdp: no project matches '$1'" >&2; return 1 ;;
+    1) cd "$matches[1]" ;;
+    *) pick=$(printf '%s\n' "${matches[@]#$root/}" | fzf --height=40% --reverse) || return
+       cd "$root/$pick" ;;
+  esac
+}
+_cdp() { compadd -- "$HOME"/code/(apple|web|games|bots|tools)/*(/N:t) }
+compdef _cdp cdp
